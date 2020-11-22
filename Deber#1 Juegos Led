@@ -1,0 +1,166 @@
+/*
+ * NOMBRE: Jefferson Malte
+ * MATERIA: Sistemas Embebidos
+ * DEBER1: Leds y Switchs
+ * CODIGO 1:Realizar un programa que accione mediante 4 switchs a un juego de luces diferente.
+ * OBJETIVOS:
+ * Juego #1
+ * Se usan 6 leds, de los cuales se encienden los pares por 10 ocasiones
+ * Juego #2
+ * Se usan 6 leds, de los cuales se encienden los impartes por 10 ocasiones
+ * Juego #3
+ * Se encienden secuencialmente cada uno 
+ * Juego #4
+ * 6 Leds: 2 Filas de 3 leds
+ * Se encienden Los extremos de la fila 1 y luego el del medio 
+ * se repite el Proceso en la fila 2 
+ */
+ const int led1=11; //Variable led1
+ const int led2=12; //Variable led2
+ const int led3=13; //Variable led3
+ const int led4=8; //Variable led4
+ const int led5=9; //Variable led5
+ const int led6=10; //Variable led6
+ const int sw0=7; // Variables sw juego 1
+ const int sw1=6; // Variables sw juego 2
+ const int sw2=5; // Variables sw juego 3
+ const int sw3=4; // Variables sw juego 4
+      int i;  //variable para ciclo if
+      int j;
+void setup() {
+  pinMode(led1,OUTPUT);
+  pinMode(led2,OUTPUT);
+  pinMode(led3,OUTPUT);
+  pinMode(led4,OUTPUT);
+  pinMode(led5,OUTPUT);
+  pinMode(led6,OUTPUT);
+  pinMode(sw0,INPUT);
+  pinMode(sw1,INPUT);
+  pinMode(sw2,INPUT);
+  pinMode(sw3,INPUT);
+  
+}
+
+void loop() {
+// Variables sw juego 1
+// uso de if Para tener los estados logicos necesarios
+  if(digitalRead(sw0)==HIGH && digitalRead(sw1)==LOW && digitalRead(sw2)==LOW && digitalRead(sw3)==LOW)
+  {
+  for(i=0;i<10;i++){
+    delay(300);
+     digitalWrite(led2,HIGH);
+     digitalWrite(led4,HIGH);
+     digitalWrite(led6,HIGH);
+    delay(300);
+    digitalWrite(led2,LOW);
+    digitalWrite(led4,LOW);
+    digitalWrite(led6,LOW);
+    delay(300);   
+  }
+ 
+ }
+ 
+//juego 2
+  if(digitalRead(sw0)==LOW && digitalRead(sw1)==HIGH && digitalRead(sw2)==LOW && digitalRead(sw3)==LOW)
+  {
+  for(j=0;j<10;j++){
+    delay(300);
+     digitalWrite(led1,HIGH);
+     digitalWrite(led3,HIGH);
+     digitalWrite(led5,HIGH);
+    delay(300);
+    digitalWrite(led1,LOW);
+    digitalWrite(led3,LOW);
+    digitalWrite(led5,LOW);
+    delay(300);
+  }
+  }
+//juego 3
+  if(digitalRead(sw0)==LOW && digitalRead(sw1)==LOW && digitalRead(sw2)==HIGH && digitalRead(sw3)==LOW)
+  {
+    digitalWrite(led1,HIGH);
+    digitalWrite(led2,LOW);
+    digitalWrite(led3,LOW);
+    digitalWrite(led4,LOW);
+    digitalWrite(led5,LOW);
+    digitalWrite(led6,LOW);
+    delay(400);
+    digitalWrite(led2,HIGH);
+    digitalWrite(led1,LOW);
+    digitalWrite(led3,LOW);
+    digitalWrite(led4,LOW);
+    digitalWrite(led5,LOW);
+    digitalWrite(led6,LOW);
+    delay(400);
+    digitalWrite(led3,HIGH);
+    digitalWrite(led2,LOW);
+    digitalWrite(led1,LOW);
+    digitalWrite(led4,LOW);
+    digitalWrite(led5,LOW);
+    digitalWrite(led6,LOW);
+    delay(400);
+    digitalWrite(led4,HIGH);
+    digitalWrite(led2,LOW);
+    digitalWrite(led3,LOW);
+    digitalWrite(led1,LOW);
+    digitalWrite(led5,LOW);
+    digitalWrite(led6,LOW);
+    delay(400);
+    digitalWrite(led5,HIGH);
+    digitalWrite(led2,LOW);
+    digitalWrite(led3,LOW);
+    digitalWrite(led4,LOW);
+    digitalWrite(led1,LOW);
+    digitalWrite(led6,LOW);
+    delay(400);
+    digitalWrite(led6,HIGH);
+    digitalWrite(led2,LOW);
+    digitalWrite(led3,LOW);
+    digitalWrite(led4,LOW);
+    digitalWrite(led5,LOW);
+    digitalWrite(led1,LOW);
+    delay(400);
+    }
+ 
+  
+// juego 4
+  if(digitalRead(sw0)==LOW && digitalRead(sw1)==LOW && digitalRead(sw2)==LOW && digitalRead(sw3)==HIGH)
+  {
+    digitalWrite(led1,HIGH);
+  digitalWrite(led2,LOW);
+  digitalWrite(led3,HIGH);
+  digitalWrite(led4,LOW);
+  digitalWrite(led5,LOW);
+  digitalWrite(led6,LOW);
+    delay(400);
+    digitalWrite(led1,LOW);
+  digitalWrite(led2,HIGH);
+  digitalWrite(led3,LOW);
+  digitalWrite(led4,LOW);
+  digitalWrite(led5,LOW);
+  digitalWrite(led6,LOW);
+  delay(400);
+    digitalWrite(led1,LOW);
+  digitalWrite(led2,LOW);
+  digitalWrite(led3,LOW);
+  digitalWrite(led4,HIGH);
+  digitalWrite(led5,LOW);
+  digitalWrite(led6,HIGH);
+  delay(400);
+  digitalWrite(led1,LOW);
+  digitalWrite(led2,LOW);
+  digitalWrite(led3,LOW);
+  digitalWrite(led4,LOW);
+  digitalWrite(led5,HIGH);
+  digitalWrite(led6,LOW);
+  delay(400);
+  }
+else{
+  digitalWrite(led1,LOW);
+  digitalWrite(led2,LOW);
+  digitalWrite(led3,LOW);
+  digitalWrite(led4,LOW);
+  digitalWrite(led5,LOW);
+  digitalWrite(led6,LOW);
+}
+  }
