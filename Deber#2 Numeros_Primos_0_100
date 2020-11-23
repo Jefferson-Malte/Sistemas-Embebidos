@@ -1,0 +1,124 @@
+/*
+ * NOMBRE: Jefferson Malte
+ * MATERIA: Sistemas Embebidos
+ * DEBER: #2 
+ * CODIGO:Pulsador y Displays
+ * OBJETIVOS: Realizar un programa que al presionar el pulsador, se visualiza a cada número primo hasta el 99.
+  */
+const int A=8; // decodificador
+const int B=9; // decodificador
+const int C=10;// decodificador
+const int D=11;// decodificador
+const int btn=7;
+const int unidades=12;
+const int decenas=13;
+int cont; //variable contador
+int pul;
+int uni;
+int dec;
+int j; // variable ciclo for
+void setup(){
+  pinMode(A,OUTPUT); //bit menos significativo
+  pinMode(B,OUTPUT);
+  pinMode(C,OUTPUT);
+  pinMode(D,OUTPUT); //bit mas significativo
+  pinMode(btn,INPUT);
+  pinMode(unidades,OUTPUT);
+   pinMode(decenas,OUTPUT);
+   
+}
+void loop(){
+  if(digitalRead(btn)==LOW){
+    pul=1;
+  }  
+  if(digitalRead(btn)==HIGH && pul==1){
+    delay(300);
+    for( cont=2; cont <100;cont++){ // primer ciclo para llegar al numero 99
+      boolean primo = true; 
+      //verificar si cont es numero primo
+      for(j=2;j<cont/2;j++){ //segundo ciclo para encontrar el divisor de cont 
+        if(cont%j==0){
+          primo=false;
+        }
+      }
+      //impresion de numeros primos ubicados en decenas y unidades
+        if(primo){
+          pul=0;
+          dec=cont/10;
+          uni=cont-dec*10;       
+        }       
+digitalWrite(unidades,HIGH);
+digitalWrite(decenas,LOW);
+contador(uni);
+delay(100);
+digitalWrite(unidades,LOW);
+digitalWrite(decenas,HIGH);
+contador(dec);
+delay(100);
+    }}
+}
+void contador(int i){
+  
+    switch(i){
+      case 0:
+        digitalWrite(A,LOW);
+        digitalWrite(B,LOW);
+        digitalWrite(C,LOW);
+        digitalWrite(D,LOW);
+      break;
+      case 1:
+        digitalWrite(A,HIGH);
+        digitalWrite(B,LOW);
+        digitalWrite(C,LOW);
+        digitalWrite(D,LOW);
+      break;
+      case 2:
+        digitalWrite(A,LOW);
+        digitalWrite(B,HIGH);
+        digitalWrite(C,LOW);
+        digitalWrite(D,LOW);
+      break;
+      case 3:
+        digitalWrite(A,HIGH);
+        digitalWrite(B,HIGH);
+        digitalWrite(C,LOW);
+        digitalWrite(D,LOW);
+      break;
+      case 4:
+        digitalWrite(A,LOW);
+        digitalWrite(B,LOW);
+        digitalWrite(C,HIGH);
+        digitalWrite(D,LOW);
+      break;
+      case 5:
+        digitalWrite(A,HIGH);
+        digitalWrite(B,LOW);
+        digitalWrite(C,HIGH);
+        digitalWrite(D,LOW);
+      break;
+      case 6:
+        digitalWrite(A,LOW);
+        digitalWrite(B,HIGH);
+        digitalWrite(C,HIGH);
+        digitalWrite(D,LOW);
+      break;
+      case 7:
+        digitalWrite(A,HIGH);
+        digitalWrite(B,HIGH);
+        digitalWrite(C,HIGH);
+        digitalWrite(D,LOW);
+      break;
+      case 8:
+        digitalWrite(A,LOW);
+        digitalWrite(B,LOW);
+        digitalWrite(C,LOW);
+        digitalWrite(D,HIGH);
+      break;
+      case 9:
+        digitalWrite(A,HIGH);
+        digitalWrite(B,LOW);
+        digitalWrite(C,LOW);
+        digitalWrite(D,HIGH);
+      break;
+    }
+  }
