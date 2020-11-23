@@ -13,7 +13,6 @@ const int btn=7;
 const int unidades=12;
 const int decenas=13;
 int cont; //variable contador
-int pul;
 int uni;
 int dec;
 int j; // variable ciclo for
@@ -28,10 +27,8 @@ void setup(){
    
 }
 void loop(){
-  if(digitalRead(btn)==LOW){
-    pul=1;
   }  
-  if(digitalRead(btn)==HIGH && pul==1){
+  if(digitalRead(btn)==HIGH){
     delay(300);
     for( cont=2; cont <100;cont++){ // primer ciclo para llegar al numero 99
       boolean primo = true; 
@@ -43,7 +40,6 @@ void loop(){
       }
       //impresion de numeros primos ubicados en decenas y unidades
         if(primo){
-          pul=0;
           dec=cont/10;
           uni=cont-dec*10;       
         }       
