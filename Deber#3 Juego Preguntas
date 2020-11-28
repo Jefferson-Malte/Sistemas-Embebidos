@@ -1,0 +1,590 @@
+/*
+ * NOMBRE: Jefferson Malte
+ * MATERIA: Sistemas Embebidos
+ * DEBER: #3
+ * CODIGO:Juego de Preguntas
+ * OBJETIVOS:
+ * tener mínimo 8 preguntas que deben observarse en orden aleatorio. 
+ * La forma de visualización es por medio de comunicación serial. 
+ * Su respuesta solo debe ser "SI" y "NO" ingresadas de la misma forma por comunicación serial.
+ * Mostrar solo 5 de las 8 preguntas. 
+ * Se presentan el puntaje (respuestas acertadas) en un display.
+  */
+char dato,resp1;
+
+String resp2; // variable de recepcion de strings
+
+int num=0;// variable numero de pregunta a buscar
+int num1=0;
+int num2=0;// variable numero de pregunta a buscar
+int num3=0;
+int num4=0;// variable numero de pregunta a buscar
+int num5=0;
+int num6=0;// variable numero de pregunta a buscar
+int num7=0;
+
+int r;// variables  para el recorrido while 
+int corr,inc; // conteo de preguntas correctas e incorrectas
+const int A=8; // decodificador
+const int B=9; // decodificador
+const int C=10;// decodificador
+const int D=11;// decodificador
+
+void setup() {
+  Serial.begin(9600);
+  randomSeed(4);
+  pinMode(A,OUTPUT);
+  pinMode(B,OUTPUT);
+  pinMode(C,OUTPUT);
+  pinMode(D,OUTPUT);
+  Serial.println("JUEGO DE PREGUNTAS");
+}
+
+void loop() {
+  Serial.println("SI DESEA JUGAR  DIGITA A");// digitar Caracter para iniciar el juego 'A'
+  while(Serial.available() == 0) {}
+   dato = Serial.read(); // lee el dato
+   
+  if(dato=='A'){
+    r=1;
+    while(r==1){ // ciclo mientras para realizar todas las preguntas
+      corr=0;
+      inc=0;
+      //------------------PRIMERA PREGUNTA------------------
+      Serial.println("\nPRIMERA PREGUNTA:");
+      num =random (1,4); //generar un numero random del 1 al 4
+      delay(1000);
+
+      if(num== 1){ // primer opcion de la pregunta 1
+        Serial.println("2+2=4"); //pregunta
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString(); // lee el dato  
+     
+        if(resp2=="SI"){ // si respuesta es correcta
+          corr=corr+1; // contador de respuestas correctas
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="NO"){ // si respuesta es incorrecta
+          inc=inc+1; //contador de respuestas incorrectas
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+
+      if(num==2){
+        Serial.println("2*3=4");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString();
+        if(resp2=="NO"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="SI"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+      
+      if(num==3){
+        Serial.println("4-3=1");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString();
+        if(resp2=="SI"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="NO"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+      //------------------SEGUNDA PREGUNTA------------------
+      Serial.println("");
+      Serial.println("Presiona enter");
+      while(Serial.available() == 0) {}
+        resp2= Serial.read();
+        Serial.println("");
+        Serial.println("SEGUNDA PREGUNTA:");
+        num1 =random (1,4);
+        delay(1000);
+        
+        if(num1== 1){
+        Serial.println("SISTEMAS EMBEBIDOS ES UNA MATERIA DE 5TO:");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString(); // lee el dato    
+        if(resp2=="SI"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="NO"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+
+      if(num1==2){
+        Serial.println("EL METRO TIENE 100 MILIMETROS:");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString();
+        if(resp2=="NO"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="SI"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+      
+      if(num1==3){
+        Serial.println("TELECOMUNICACIONES ES UNA CARRERA DE FICA:");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString();
+        if(resp2=="SI"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="NO"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+      //------------------TERCERA PREGUNTA------------------
+      Serial.println("");
+      Serial.println("Presiona enter");
+      while(Serial.available() == 0) {}
+        resp2= Serial.read();
+        Serial.println("");
+        Serial.println("TERCERA PREGUNTA:");
+        num2 =random (1,4);
+        delay(1000);
+        
+        if(num2== 1){
+        Serial.println("LA TIERRA ES EL TERCER PLANETA DEL SITEMA SOLAR:");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString(); // lee el dato    
+        if(resp2=="SI"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="NO"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+
+      if(num2==2){
+        Serial.println("MARTE ES EL TERCER PLANETA DEL SISTEMA SOLAR:");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString();
+        if(resp2=="NO"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="SI"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+      
+      if(num2==3){
+        Serial.println("VENUS ES EL PRIMER PLANETA DEL SISTEMA SOLAR:");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString();
+        if(resp2=="NO"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="SI"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+      //------------------CUARTA PREGUNTA------------------
+      Serial.println("");
+      Serial.println("Presiona enter");
+      while(Serial.available() == 0) {}
+        resp2= Serial.read();
+        Serial.println("");
+        Serial.println("CUARTA PREGUNTA:");
+        num3 =random (1,4);
+        delay(1000);
+        
+        if(num3== 1){
+        Serial.println("BOOK EN ESPAÑOL SIGNIFICA CUADERNO");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString(); // lee el dato    
+        if(resp2=="NO"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="SI"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+
+      if(num3==2){
+        Serial.println("PEN EN ESPAÑOL SIGNIFICA LAPIZ:");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString();
+        if(resp2=="NO"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="SI"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+      
+      if(num3==3){
+        Serial.println("ERASER EN ESPAÑOL SIGNICA BORRADOR:");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString();
+        if(resp2=="SI"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="NO"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+      //------------------QUINTA PREGUNTA------------------
+      Serial.println("");
+      Serial.println("Presiona enter");
+      while(Serial.available() == 0) {}
+        resp2= Serial.read();
+        Serial.println("");
+        Serial.println("QUINTA PREGUNTA:");
+        num4 =random (1,4);
+        delay(1000);
+        
+        if(num4== 1){
+        Serial.println("TENSION SE MIDE EN VOLTS");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString(); // lee el dato    
+        if(resp2=="SI"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="NO"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+
+      if(num4==2){
+        Serial.println("CORRIENTE SE MIDE EN OHMIOS:");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString();
+        if(resp2=="NO"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="SI"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+      
+      if(num4==3){
+        Serial.println("POTENCIA SE MIDE EN WATTS:");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString();
+        if(resp2=="SI"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="NO"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+      //------------------SEXTA PREGUNTA------------------
+      Serial.println("");
+      Serial.println("Presiona enter");
+      while(Serial.available() == 0) {}
+        resp2= Serial.read();
+        Serial.println("");
+        Serial.println("SEXTA PREGUNTA:");
+        num5 =random (1,4);
+        delay(1000);
+        
+        if(num5== 1){
+        Serial.println("IBARRA ESTA AL NORTE DEL PAIS:");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString(); // lee el dato    
+        if(resp2=="SI"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="NO"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+
+      if(num5==2){
+        Serial.println("MANABI ESTA EN EL ORIENTE DE ECUADOR:");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString();
+        if(resp2=="NO"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="SI"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+      
+      if(num5==3){
+        Serial.println("GALAPAGOZ ESTA EN LA REGION INSULAR:");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString();
+        if(resp2=="SI"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="NO"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+      //------------------SEPTIMA PREGUNTA------------------
+      Serial.println("");
+      Serial.println("Presiona enter");
+      while(Serial.available() == 0) {}
+        resp2= Serial.read();
+        Serial.println("");
+        Serial.println("SEPTIMA PREGUNTA:");
+        num6 =random (1,4);
+        delay(1000);
+        
+        if(num6== 1){
+        Serial.println("LA GUITARRA ES UN INSTRUMENTO DE CUERDAS");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString(); // lee el dato    
+        if(resp2=="SI"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="NO"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+
+      if(num6==2){
+        Serial.println("El PIANO ES UN INSTRUMENTO DE VIENTO:");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString();
+        if(resp2=="NO"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="SI"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+      
+      if(num6==3){
+        Serial.println("LA FLAUTA ES UN INSTRUMENTO DE VIENTO");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString();
+        if(resp2=="SI"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="NO"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+      //------------------OCTAVA PREGUNTA------------------
+      Serial.println("");
+      Serial.println("Presiona enter");
+      while(Serial.available() == 0) {}
+        resp2= Serial.read();
+        Serial.println("");
+        Serial.println("OCTAVA PREGUNTA:");
+        num7 =random (1,4);
+        delay(1000);
+        
+        if(num7== 1){
+        Serial.println("UN KILOGRAMO TIENE 1000 GRAMOS:");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString(); // lee el dato    
+        if(resp2=="SI"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="NO"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+
+      if(num7==2){
+        Serial.println("UN MEGABYTE TIENE 10000 BYTES:");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString();
+        if(resp2=="NO"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="SI"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+      
+      if(num7==3){
+        Serial.println("1700 OHMIOS ES IGUAL A 1.7 KILOOHMIOS:");
+        while(Serial.available() == 0) {}
+        resp2= Serial.readString();
+        if(resp2=="SI"){
+          corr=corr+1;
+          Serial.println("Tu respuesta es Correcta");
+          delay(1000);
+        }
+        else if(resp2=="NO"){
+          inc=inc+1;
+          Serial.println("Tu respuesta es Incorrecta");
+          delay(1000);
+        }
+      }
+      //------------------RESULTADOS------------------
+      Serial.println("");
+      Serial.println("Presiona enter para conocer resultados");
+      while(Serial.available() == 0) {}
+        resp2= Serial.read();
+
+         Serial.println("");
+         Serial.println("RESULTADOS: ");
+         Serial.println("CORECTAS: "+String(corr));
+         Serial.println("INCORRECTAS: "+String(inc));
+         //---------IMPRESION DE RESPUESTAS CORRECTAS EN DISPLAY-----------
+          switch(corr){
+            // casos de 0 a 9 para prender el led correctamente
+      case 0:
+        digitalWrite(A,LOW);
+        digitalWrite(B,LOW);
+        digitalWrite(C,LOW);
+        digitalWrite(D,LOW);
+      break;
+      case 1:
+        digitalWrite(A,HIGH);
+        digitalWrite(B,LOW);
+        digitalWrite(C,LOW);
+        digitalWrite(D,LOW);
+      break;
+      case 2:
+        digitalWrite(A,LOW);
+        digitalWrite(B,HIGH);
+        digitalWrite(C,LOW);
+        digitalWrite(D,LOW);
+      break;
+      case 3:
+        digitalWrite(A,HIGH);
+        digitalWrite(B,HIGH);
+        digitalWrite(C,LOW);
+        digitalWrite(D,LOW);
+      break;
+      case 4:
+        digitalWrite(A,LOW);
+        digitalWrite(B,LOW);
+        digitalWrite(C,HIGH);
+        digitalWrite(D,LOW);
+      break;
+      case 5:
+        digitalWrite(A,HIGH);
+        digitalWrite(B,LOW);
+        digitalWrite(C,HIGH);
+        digitalWrite(D,LOW);
+      break;
+      case 6:
+        digitalWrite(A,LOW);
+        digitalWrite(B,HIGH);
+        digitalWrite(C,HIGH);
+        digitalWrite(D,LOW);
+      break;
+      case 7:
+        digitalWrite(A,HIGH);
+        digitalWrite(B,HIGH);
+        digitalWrite(C,HIGH);
+        digitalWrite(D,LOW);
+      break;
+      case 8:
+        digitalWrite(A,LOW);
+        digitalWrite(B,LOW);
+        digitalWrite(C,LOW);
+        digitalWrite(D,HIGH);
+      break;
+          }
+
+
+         //------------------REINICIAR JUEGO------------------
+      Serial.println("");
+      Serial.println("SI DESEA JUGAR OTRA VEZ DIGITA R DE LO CONTRARIO DIGITE OTRA LETRA:");
+      while(Serial.available() == 0) {}
+        resp1= Serial.read();
+
+        if(resp1=='R'){
+          r=1;
+        }
+        else{
+          r=2;
+        }
+
+    }
+   
+  }
