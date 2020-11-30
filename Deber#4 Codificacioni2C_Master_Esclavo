@@ -1,0 +1,213 @@
+///////MASTER///////////////////
+/*
+ * NOMBRE: Jefferson Malte
+ * MATERIA: Sistemas Embebidos
+ * DEBER: #4
+ * CODIGO:Codificacion Mensaje
+ * OBJETIVOS:
+ * codifique las vocales en palabras ingresadas por comunicación serial. 
+ * Este mensaje se ingresa por comunicación serial en el master, este envía al esclavo para que realice la codificación por comunicación I2C. 
+ * Lo envía al master por el mismo medio y se muestra el resultado en una LCD en el master. 
+ * La codificación es:
+ * a=@
+ * e=#
+ * i= !
+ * o = *
+ * u= $
+ * Ejemplo: CARRO = C@RR*
+ * ____________________MASTER_____________________
+  */
+ #include<Wire.h>//libreriai2c
+ #include<LiquidCrystal.h>
+ LiquidCrystal lcd {13,12,11,10,9,8};//RS,E, D4 D5 D6 D7
+ char dato;//variable de almacenamiento de datos
+
+void setup() {
+  Wire.begin();//inicia cx i2c
+  Serial.begin(9600);//inicia cx serial
+  lcd.begin(16,2);
+}
+
+void loop() {
+  if(Serial.available()>0){//verifica el puerto de cx
+    dato=Serial.read();
+    Wire.beginTransmission(4);
+    Wire.write(dato);
+    Wire.endTransmission();
+    delay(500);
+    if(dato=='P'){
+      Wire.requestFrom(4,6);
+      Serial.println("Mensaje Pedido");
+    }
+  }
+   while(Wire.available()){
+    String mensaje = Wire.readString();
+    Serial.println(mensaje);
+    delay(100);
+    lcd.setCursor(0,1);
+    lcd.print(mensaje);
+   }
+   
+}
+
+
+/////////////////ESCLAVO////////////
+/*
+ * 
+ * 
+ * ____________________ESCLAVO_____________________
+  */
+ #include<Wire.h>//libreria isc
+ #include<LiquidCrystal.h>
+ LiquidCrystal lcd {13,12,11,10,9,8};//RS,E, D4 D5 D6 D7
+ char dato;//
+ String letra;
+ String dato2;
+ String codigo;
+ int a=0;
+ String total="";
+ int tam;//variables a usar
+int i=0;
+int j=0;
+int cont=0;
+
+void setup() {
+  lcd.begin(16,2);
+  Wire.begin(4);
+  Wire.onReceive(receiveEvent);
+   Wire.onRequest(requestEvent);// 
+  Serial.begin(9600);
+}
+
+void loop() {
+  total="";
+  codigo="";
+  tam=0;
+}
+void receiveEvent (int bytes){// metod
+  if(Wire.available()>0){
+    dato=Wire.read();
+    dato2=dato2+String(dato);
+     dato2.toUpperCase();
+    tam=dato2.length();
+    Serial.print(dato);
+    delay(100);
+    for(int i=0;i<tam;i++){
+      letra=dato2.substring(i,i+1);//separando caracteres
+      codificacion();//llamar al metodo para comparar y guardar
+      total=total+codigo;//y guarda en codigo lo que almacena
+    }
+    lcd.setCursor(0,1);
+    lcd.print(total);
+    lcd.setCursor(0,0);
+    lcd.print(dato2);
+ }
+}
+
+void requestEvent(){ 
+ 
+  Serial.println("ENVIAR MENSAJE");
+   if(Wire.available()>0){
+    dato=Wire.read();
+    dato2=dato2+String(dato);
+     dato2.toUpperCase();
+    tam=dato2.length();
+    Serial.print(dato);
+    delay(100);
+    for(int i=0;i<tam;i++){
+      letra=dato2.substring(i,i+1);//separando caracteres
+      codificacion();//llamar al metodo para comparar y guardar
+      total=total+codigo;//y guarda en codigo lo que almacena
+    }
+    
+ }
+ Serial.println(total);
+    int t=total.length()+1;
+    char vec[t];
+    total.toCharArray (vec,t);
+     Wire.beginTransmission(4); //enviar informacion al master con id 4
+     Wire.write(vec); //valor a enviar
+     Wire.endTransmission();  //fin de la trasmision
+}
+ void codificacion(){
+  if(letra=="A"){
+    codigo="@";
+  }
+  if(letra=="B"){
+    codigo="B";
+  }
+  if(letra=="C"){
+    codigo="C";
+  }
+  if(letra=="D"){
+    codigo="D";
+  }
+  if(letra=="E"){
+    codigo="#";
+  }
+  if(letra=="F"){
+    codigo="F";
+  }
+  if(letra=="G"){
+    codigo="G";
+  }
+  if(letra=="H"){
+    codigo="H";
+  }
+  
+  if(letra=="I"){
+    codigo="!";
+  }
+ 
+  if(letra=="J"){
+    codigo="J";
+  }
+  if(letra=="K"){
+    codigo="K";
+  }
+  if(letra=="L"){
+    codigo="L";
+  }
+  if(letra=="M"){
+    codigo="M";
+  }
+  if(letra=="N"){
+    codigo="N";
+  }
+  if(letra=="O"){
+    codigo="*";
+  }
+  if(letra=="P"){
+    codigo="P";
+  }
+  if(letra=="Q"){
+    codigo="Q";
+  }
+  if(letra=="R"){
+    codigo="R";
+  }
+  if(letra=="S"){
+    codigo="S";
+  }
+  if(letra=="T"){
+    codigo="T";
+  }
+  if(letra=="U"){
+    codigo="$";
+  }
+  if(letra=="V"){
+    codigo="V";
+  }
+  if(letra=="X"){
+    codigo="X";
+  }
+  if(letra=="Y"){
+    codigo="Y";
+  }
+  if(letra=="Z"){
+    codigo="Z";
+  }
+ }
+
+
+
