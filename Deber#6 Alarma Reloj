@@ -1,0 +1,236 @@
+/*
+ * NOMBRE: Jefferson Malte
+ * MATERIA: Sistemas Embebidos
+ * DEBER: #6
+ * CODIGO: Reloj Alarma
+ * OBJETIVOS:
+ * Realizar un reloj con alarma ingresada por comunicación serial.  
+ * Los números sean vistos en displays.
+  */
+
+  #include <MsTimer2.h>
+  #include <LiquidCrystal.h>
+
+  LiquidCrystal lcd(13,12,11,10,9,8);
+
+  int segundos=0;
+  int minutos=0;
+  int horas=0;
+
+  String dato;
+  int hh;
+  int mm;
+
+  int a=0;
+  int b=0;
+  int c=0;
+  int d=0;
+  int e=0;
+
+  const int A=8; 
+  const int B=9; 
+  const int C=10;
+  const int D=11;
+
+  const int unidadess=12;
+  const int decenass=13;
+  const int um=6;
+  const int dm=7;
+  const int uh=4;
+  const int dh=5;
+  
+  int uni;
+  int dec;
+  int uni1;
+  int dec1;
+  int uni2;
+  int dec2;
+  void setup() {
+  lcd.begin(16,2);
+  MsTimer2::set(1000,reloj);
+  MsTimer2::start();
+  Serial.begin(9600);
+  Serial.println("Ingrese la hora de la alarma:");
+}
+
+void loop() {
+ 
+  
+  if(Serial.available()>0 && b==0){
+     dato=Serial.readString();
+     hh=dato.toInt();
+     if(hh<=23 && hh>=0){
+      Serial.println(" Ingrese el minuto");
+      b=1;
+     }
+  }
+  
+  if(Serial.available()>0 && c==0){
+     dato=Serial.readString();
+     mm=dato.toInt();
+     if(mm<=59 && mm>0){
+      Serial.println(" ");
+      c=1;
+     }
+     if(hh<=23 && mm<=59 && e==0){
+     
+      Serial.println(" ALARMA CONFIGURADA");
+      Serial.print(String(hh)+String(":")+String(mm)+String(":00"));
+      if(hh==horas && mm==minutos){
+        MsTimer2::stop();
+        Serial.println(" LEVANTARSE");
+        
+    }
+    e=1;
+   }
+  }
+  
+  if(segundos<60){
+  segundos++;
+      if(segundos<10)
+         uni=segundos;
+      else{
+        dec=segundos/10;
+        uni=segundos-dec*10;
+      }
+  }
+  else{
+  segundos=0;
+  digitalWrite(unidadess,HIGH);
+  digitalWrite(decenass,LOW);
+  contador(uni);
+  delay(100);
+  digitalWrite(unidadess,LOW);
+  digitalWrite(decenass,HIGH);
+  contador(dec);
+  delay(100);
+      if(minutos<60){
+        minutos++;
+          if(minutos<10)
+           uni1=minutos;
+          else{
+          dec1=minutos/10;
+          uni1=minutos-dec1*10;
+          }
+       }
+       else{
+        minutos=0;
+        digitalWrite(um,HIGH);
+        digitalWrite(dm,LOW);
+        contador(uni1);
+        delay(100);
+        digitalWrite(um,LOW);
+        digitalWrite(dm,HIGH);
+        contador(dec1);
+        delay(100);
+
+          if(horas<24){
+            horas++;
+              if(horas<10)
+              uni2=horas;
+              else{
+              dec2=horas/10;
+              uni2=horas-dec2*10;
+              }
+          }
+          else{
+            horas=0;
+            digitalWrite(uh,HIGH);
+            digitalWrite(dh,LOW);
+            contador(uni2);
+            delay(100);
+            digitalWrite(uh,LOW);
+            digitalWrite(dh,HIGH);
+            contador(dec2);
+            delay(100);
+          }
+       }
+  }
+}
+
+void reloj(){
+  if(segundos<60)
+  segundos++;
+  else{
+    segundos=0;
+    if(minutos<60)
+    minutos++;
+    else{
+    minutos=0;
+      if(horas<24)
+      horas++;
+      else
+        horas=0;
+    }
+  }
+  
+}
+
+
+
+
+void contador(int i){
+  
+    switch(i){
+      case 0:
+        digitalWrite(A,LOW);
+        digitalWrite(B,LOW);
+        digitalWrite(C,LOW);
+        digitalWrite(D,LOW);
+      break;
+      case 1:
+        digitalWrite(A,HIGH);
+        digitalWrite(B,LOW);
+        digitalWrite(C,LOW);
+        digitalWrite(D,LOW);
+      break;
+      case 2:
+        digitalWrite(A,LOW);
+        digitalWrite(B,HIGH);
+        digitalWrite(C,LOW);
+        digitalWrite(D,LOW);
+      break;
+      case 3:
+        digitalWrite(A,HIGH);
+        digitalWrite(B,HIGH);
+        digitalWrite(C,LOW);
+        digitalWrite(D,LOW);
+      break;
+      case 4:
+        digitalWrite(A,LOW);
+        digitalWrite(B,LOW);
+        digitalWrite(C,HIGH);
+        digitalWrite(D,LOW);
+      break;
+      case 5:
+        digitalWrite(A,HIGH);
+        digitalWrite(B,LOW);
+        digitalWrite(C,HIGH);
+        digitalWrite(D,LOW);
+      break;
+      case 6:
+        digitalWrite(A,LOW);
+        digitalWrite(B,HIGH);
+        digitalWrite(C,HIGH);
+        digitalWrite(D,LOW);
+      break;
+      case 7:
+        digitalWrite(A,HIGH);
+        digitalWrite(B,HIGH);
+        digitalWrite(C,HIGH);
+        digitalWrite(D,LOW);
+      break;
+      case 8:
+        digitalWrite(A,LOW);
+        digitalWrite(B,LOW);
+        digitalWrite(C,LOW);
+        digitalWrite(D,HIGH);
+      break;
+      case 9:
+        digitalWrite(A,HIGH);
+        digitalWrite(B,LOW);
+        digitalWrite(C,LOW);
+        digitalWrite(D,HIGH);
+      break;
+    }
+  }
