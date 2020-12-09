@@ -1,0 +1,109 @@
+/*
+ * NOMBRE: Jefferson Malte
+ * MATERIA: Sistemas Embebidos
+ * DEBER: #7
+ * CODIGO:contraseña EEPROM
+ * OBJETIVOS:
+ * Realiza un programa que valide y actualice una contraseña almacenada en la memoria EEPROM. 
+ * Como estado inicial, la contraseña es de 4 dígitos que son: 4563.
+  */
+#include <Keypad.h>
+#include <LiquidCrystal.h>   
+#include <EEPROM.h>
+const byte fil = 4; 
+const byte col = 4;
+
+int value,PW,CurrentPW=4563;
+
+char Key;
+byte pFil[]  = {7,6,5,4};
+byte pCol[] = {3,2,A4,A5};
+char teclas[4][4] = {
+{'7','8','9','A'},
+{'4','5','6','B'},
+{'1','2','3','C'},
+{'*','0','#','D'}};
+Keypad teclado = Keypad( makeKeymap(teclas), pFil, pCol, fil, col); 
+LiquidCrystal lcd(13, 12, 11, 10, 9, 8); 
+void setup() {
+lcd.begin(16, 2);   
+teclado.setHoldTime(1000); //Tiempo de espera para teclado
+EEPROM.get( 0, PW );
+if(PW!=CurrentPW && PW>0){
+CurrentPW=PW;
+}
+//lcd.print("PW: ");
+//lcd.print(CurrentPW);
+//delay(5000);
+}
+
+
+
+void loop() {
+char opcion; //opciones de ingresar y cambiar contraseña
+
+Key=teclado.getKey();
+if(Key>='A' && Key<='B'){
+opcion=Key;
+lcd.clear();
+lcd.home();         // Coloca el cursor en las coordenadas (0,0)   
+lcd.print("Digite Clave:");  
+PW=clave();
+//Valida la contraseña
+if(PW == CurrentPW){
+
+if(opcion=='A'){ 
+lcd.clear();
+lcd.setCursor(0,0);          
+lcd.print("Ingreso Correcto"); 
+lcd.setCursor(0,1);
+lcd.print("Bienvenido");
+}
+
+if(opcion=='B'){ //cambiar contraseña
+lcd.clear();
+lcd.home();            
+lcd.print("Clave Nueva:"); // Escribe no LCD 
+PW=clave();
+EEPROM.put( 0, PW );  //Grava en EEPROM
+lcd.clear();
+lcd.home();           
+lcd.print("Clave Guardada!"); 
+CurrentPW=PW;
+delay(1000);
+}
+
+}else{
+lcd.clear();
+lcd.home();         
+lcd.print("Clave Erronea!");  
+delay(1000); 
+}
+} 
+}
+//----------metodo contraseña---------
+
+int clave(void){ //devuelve enteros
+int pass,i=0;
+String KeyWord;
+
+lcd.setCursor(0, 1);
+while(i<4){
+Key=teclado.waitForKey(); //espera a digitos del teclado
+if(Key>='0' && Key<='9'){
+lcd.print('*');
+KeyWord += Key;   
+i++;
+}
+
+if(Key=='D'){ //salir del while
+i=4;
+}
+}
+if(KeyWord.length()>0){
+pass=KeyWord.toInt(); 
+}else{
+pass=0;
+}
+return(pass);
+}
