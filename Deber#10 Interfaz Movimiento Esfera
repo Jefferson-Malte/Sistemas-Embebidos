@@ -1,0 +1,28 @@
+//Nombre: Jefferson Malte
+//Deber: Nro. 10
+//Codigo: Realice una interfaz que permita mover una esfera por toda la pantalla mediante teclas.
+
+int x=300;
+int y = 300;
+void setup(){
+  size(600,600);
+  
+}
+
+void draw(){
+  background(#17227E);
+  if(keyPressed && (key==CODED)){
+    if((keyCode ==LEFT)&&(x>=25)){
+      x -=3;
+    }else if ((keyCode ==RIGHT)&&(x<=575)){
+      x +=3;
+    }
+    if((keyCode ==UP)&&(y>=25)){
+      y -=3;
+    } else if((keyCode == DOWN)&&(y<=575)){
+      y +=3;
+    }
+}
+fill(255,0,0);
+ellipse(x,y,50,50);
+}
