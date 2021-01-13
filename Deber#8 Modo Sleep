@@ -1,0 +1,76 @@
+/*
+* NOMBRE: Jefferson Malte
+* MATERIA: Sistemas Embebidos
+* DEBER: # 8
+* CODIGO: Modo Sleep
+* OBJETIVOS:
+* Realizar un código que el sistema se reinicia cada minuto, 
+* active el conversor análogo-digital realice una lectura y vuelve el sistema a un modo sleep.
+*/
+
+#include<avr/sleep.h> 
+#include<avr/power.h>
+#include<avr/wdt.h> 
+#include<MsTimer2.h>
+
+int cont=0;
+int tiempo=60;
+int on=0;
+int a=0;
+void (* resetFunc)(void)=0;
+
+void setup() {
+  Serial.begin(9600);
+  attachInterrupt(0,activar,LOW);
+  MsTimer2::set(1000,trabajo);
+  set_sleep_mode(SLEEP_MODE_ADC);
+  sleep_enable();
+}
+
+void loop() {
+ if(on==2 && a==1){
+ Serial.println("ME DORMI :'");
+    delay(1000);
+    sleep_mode();
+ }
+
+}
+
+void activar(){
+  switch(on){
+    case 0:
+      Serial.println("inicio del sistema");
+      Serial.println(String("Tiempo funcionamiento: ")+String(tiempo)+String(" seg"));
+      MsTimer2::start();
+      on++;
+    break;
+    case 1:
+      Serial.println("activar el CAD ");  
+      power_adc_enable();
+      Serial.println(analogRead(0));
+      delay(100);
+      on++;
+      a++;
+    break;
+    case 2:
+      Serial.println("APAGAR");
+      on=0;
+      a=0;
+      cont=0;
+      resetFunc();
+      MsTimer2::stop();
+      sleep_disable();
+      power_adc_disable();
+    break;
+  }
+}
+void trabajo(){
+  cont++;
+  Serial.println(String("Tiempo de Funcionamiento: ")+String(cont));
+  if(cont==tiempo){
+    Serial.println("INICIO DE WDT");
+    wdt_disable();
+    wdt_enable(WDTO_2S); 
+    cont =0;
+  }
+}
