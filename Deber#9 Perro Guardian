@@ -1,0 +1,80 @@
+/*
+* NOMBRE: Jefferson Malte
+* MATERIA: Sistemas Embebidos
+* DEBER: # 9
+* CODIGO: Perro Guardian
+* OBJETIVOS:
+*  Realice un programa que mediante un conversor análogo-digital se configure el tiempo de reinicio del perro guardián (tiempos seleccionados por el usuario).
+*  Envíe mensajes por comunicación serial validando todo el proceso. 
+*/
+
+#include<avr/wdt.h>
+int dato;
+void setup() {
+Serial.begin(9600);
+}
+
+void loop() {
+  dato=analogRead(0);
+  dato=map(dato,0,1023,0,8000);
+  if(dato>=0 && dato<800){
+    Serial.println("WDT CONFIGURADO A 15MS");
+    delay(1000);
+    wdt_disable();
+    wdt_enable(WDTO_15MS); 
+  }
+  if(dato>800&& dato <=1600){
+    Serial.println("WDT CONFIGURADO A 30MS");
+    delay(1000);
+    wdt_disable();
+    wdt_enable(WDTO_30MS); 
+  }
+  if(dato>1600 && dato<=2400){
+    Serial.println("WDT CONFIGURADO A 60MS");
+    delay(1000);
+    wdt_disable();
+    wdt_enable(WDTO_60MS); 
+  }
+  if(dato>2400 && dato<3200){
+    Serial.println("WDT CONFIGURADO A 120MS");
+    delay(1000);
+    wdt_disable();
+    wdt_enable(WDTO_120MS); 
+  }
+  if(dato>3200 && dato<4000){
+    Serial.println("WDT CONFIGURADO A 250MS");
+    delay(1000);
+    wdt_disable();
+    wdt_enable(WDTO_250MS); 
+  }
+  if(dato>4000 && dato<4800){
+    Serial.println("WDT CONFIGURADO A 500MS");
+    delay(1000);
+    wdt_disable();
+    wdt_enable(WDTO_500MS); 
+  }
+  if(dato>4800 && dato<5600){
+    Serial.println("WDT CONFIGURADO A 1S");
+    delay(1000);
+    wdt_disable();
+    wdt_enable(WDTO_1S); 
+  }
+  if(dato>5600 && dato<6400){
+    Serial.println("WDT CONFIGURADO A 2S");
+    delay(1000);
+    wdt_disable();
+    wdt_enable(WDTO_2S); 
+  }
+  if(dato>6400 && dato<7200){
+    Serial.println("WDT CONFIGURADO A 4S");
+    delay(1000);
+    wdt_disable();
+    wdt_enable(WDTO_4S); 
+  }
+  if(dato>7200 && dato<=8000){
+    Serial.println("WDT CONFIGURADO A 8S");
+    delay(1000);
+    wdt_disable();
+    wdt_enable(WDTO_8S); 
+  }
+}
