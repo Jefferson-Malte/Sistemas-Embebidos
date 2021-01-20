@@ -1,0 +1,81 @@
+/*
+ * Nombre: Jefferson Malte
+ * Deber Nro. 11
+ * CAPITULO: Aprendizaje de maquina-regresion exponencial
+ * programa: 30 
+ * Objetivo: generar modelo de regresion exponencial
+ */
+ #include <math.h>
+ //matriz de datos
+ int matriz[14][2]={
+{170,67},
+{180,80},
+{170,65},
+{178,75},
+{160,55},
+{163,60},
+{165,63},
+{170,70},
+{164,62},
+{176,77},
+{164,60},
+{170,76},
+{170,56},
+{168,60},
+};
+int col=0; //moverse en columnas
+int fil=0;
+
+int X=0;//sumatoria de x
+float Logy=0;//sumatoria de Logy
+long int X2=0;//sumatoria de x^2
+float X_logy=0;// sumatoria de x*logy
+int n=14; //tam de muestras
+float alfa; //ordenada en el origen
+float beta; //pendiente
+float dert1;
+float  dert2;
+float  dert3;
+float Loga;
+float Logb;
+int m1;
+
+String dato;//recibir dato
+int estatura;//convertir dato
+float peso; 
+void setup() {
+  Serial.begin(9600);
+  //creacion de modelo
+  for(;fil<n;fil++){
+    X=X+matriz[fil][0];
+    Logy=Logy+log10(matriz[fil][1]);
+    X2=X2+pow(matriz[fil][0],2);
+    X_logy=X_logy+(matriz[fil][0]*(log10(matriz[fil][1])));
+  }
+  dert1=((Logy*X2)-(X_logy*X));
+  dert2=((n*X_logy)-(X*Logy));
+  dert3=((n*X2)-pow(X,2));
+  
+
+  Loga=dert1/dert3;
+  Logb=dert2/dert3;
+  
+  alfa=pow(10.00,Loga);
+  beta=pow(10.00,Logb);
+
+  Serial.println("El modelo es:");
+ Serial.println(String("y= ")+String(alfa)+String("x")+String(beta));
+  Serial.println("Ingrese su estatura:");
+}
+
+void loop() {
+  if(Serial.available()>0){
+    dato=Serial.readString();
+    estatura=dato.toInt();
+    peso=alfa*pow(beta,estatura);
+    Serial.println(String("Su peso es: ")+String(peso)+String("Kg"));
+    Serial.println("Ingrese su estatura");
+    Serial.println(peso);
+  }
+
+}
